@@ -4,15 +4,29 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name = "be.apti.Lector" table = "lecturers">
-        <meta attribute = "class-description">
+    <class name="be.apti.Lector" table="lecturers">
+        <meta attribute="class-description">
             Deze klasse bevat alle gegevens van de lector.
         </meta>
-        <id name = "id" type = "int" column = "id">
+        <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
-        <property name = "naam" column = "name" type = "string"/>
+        <map name="reservaties" cascade="all">
+            <key column="lecturer_id"/>
+            <index column="id" type="int"/>
+            <one-to-many class="be.apti.Reservatie"/>
+        </map>
+        <property name="naam" column="name" type="string"/>
     </class>
 
+    <class name="be.apti.Reservatie" table="reservations">
+        <meta attribute="class-description">
+            Deze klasse bevat alle gegevens van een reservatie.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="slotId" column="slot_id" type="int"/>
+    </class>
 
 </hibernate-mapping>
